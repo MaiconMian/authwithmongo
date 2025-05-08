@@ -6,16 +6,11 @@ import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
 
-import java.time.LocalDate;
-
 @Getter
 @Setter
 @NoArgsConstructor
 @AllArgsConstructor
-public class UserDTO {
-
-    @NotNull(message = "Name is required")
-    private String name;
+public class LoginDTO {
 
     @NotNull(message = "Email is required")
     private String email;
@@ -23,12 +18,4 @@ public class UserDTO {
     @NotNull(message = "Password is required")
     private String password;
 
-    @NotNull(message = "Role is required")
-    private String RoleId;
-
-    private LocalDate birthday;
-    private String street;
-    private String neighborhood;
-    private String city;
-    private String state;
 }

@@ -9,8 +9,7 @@ import lombok.Setter;
 @AllArgsConstructor
 @Getter
 @Setter
-public class ApiResponse<d> {
-    private String status;
+public class ApiResponseFormat<d> {
     private String message;
     private d data;
 }

@@ -1,0 +1,10 @@
+[
+  {
+    "name": "ROLE_USER",
+    "description": "COMMON USER"
+  },
+  {
+    "name": "ROLE_ADMIN",
+    "description": "ADMIN USER"
+  }
+]

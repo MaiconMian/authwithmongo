@@ -6,6 +6,7 @@ import io.github.maiconmian.authwithmongo.infraestructure.repository.UserReposit
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -17,9 +18,13 @@ public class UserService {
     private final UserRepository userRepository;
 
     public UserEntity getUserByEmail(String email) {
-        return userRepository.findByEmail(email)
-                .orElseThrow(() -> new BusinessException("Usuário não encontrado com email: " + email, HttpStatus.NOT_FOUND));
+        UserDetails user = userRepository.findByEmail(email);
+        if (user == null) {
+            throw new BusinessException("Usuário não encontrado com email: " + email, HttpStatus.NOT_FOUND);
+        }
+        return (UserEntity) user;
     }
+
 
     public UserEntity getUserById(String id) {
         return userRepository.findById(id)
@@ -35,11 +40,13 @@ public class UserService {
     }
 
     public UserEntity saveUser(UserEntity user) {
-        if (userRepository.findByEmail(user.getEmail()).isPresent()) {
+        UserDetails existingUser = userRepository.findByEmail(user.getEmail());
+        if (existingUser != null) {
             throw new BusinessException("E-mail já está em uso", HttpStatus.CONFLICT);
         }
         return userRepository.save(user);
     }
+
 
     public UserEntity updateUser(UserEntity user, String  id) {
         UserEntity userFind = userRepository.findById(id)
